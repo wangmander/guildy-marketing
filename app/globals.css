@@ -1,0 +1,273 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(0.99 0.005 106.423);
+  --foreground: oklch(0.145 0.015 106.423);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0.015 106.423);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0.015 106.423);
+  --primary: oklch(0.205 0.025 106.423);
+  --primary-foreground: oklch(0.985 0.005 106.423);
+  --secondary: oklch(0.96 0.01 106.423);
+  --secondary-foreground: oklch(0.205 0.025 106.423);
+  --muted: oklch(0.96 0.01 106.423);
+  --muted-foreground: oklch(0.556 0.015 106.423);
+  --accent: oklch(0.647 0.162 285.75);
+  --accent-foreground: oklch(0.985 0.005 106.423);
+  /* Updated CTA to darker, more saturated blue-purple for better contrast */
+  --cta: oklch(0.42 0.26 285);
+  --cta-foreground: oklch(0.99 0.005 106.423);
+  --border: oklch(0.922 0.01 106.423);
+  --input: oklch(0.922 0.01 106.423);
+  --ring: oklch(0.647 0.162 285.75);
+  --chart-1: oklch(0.647 0.162 285.75);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.985 0.005 106.423);
+  --sidebar-foreground: oklch(0.145 0.015 106.423);
+  --sidebar-primary: oklch(0.205 0.025 106.423);
+  --sidebar-primary-foreground: oklch(0.985 0.005 106.423);
+  --sidebar-accent: oklch(0.96 0.01 106.423);
+  --sidebar-accent-foreground: oklch(0.205 0.025 106.423);
+  --sidebar-border: oklch(0.922 0.01 106.423);
+  --sidebar-ring: oklch(0.647 0.162 285.75);
+}
+
+.dark {
+  --background: oklch(0.145 0.015 106.423);
+  --foreground: oklch(0.985 0.005 106.423);
+  --card: oklch(0.145 0.015 106.423);
+  --card-foreground: oklch(0.985 0.005 106.423);
+  --popover: oklch(0.145 0.015 106.423);
+  --popover-foreground: oklch(0.985 0.005 106.423);
+  --primary: oklch(0.985 0.005 106.423);
+  --primary-foreground: oklch(0.205 0.025 106.423);
+  --secondary: oklch(0.269 0.02 106.423);
+  --secondary-foreground: oklch(0.985 0.005 106.423);
+  --muted: oklch(0.269 0.02 106.423);
+  --muted-foreground: oklch(0.708 0.015 106.423);
+  --accent: oklch(0.647 0.162 285.75);
+  --accent-foreground: oklch(0.985 0.005 106.423);
+  --cta: oklch(0.5 0.28 285);
+  --cta-foreground: oklch(0.99 0.005 106.423);
+  --border: oklch(0.269 0.02 106.423);
+  --input: oklch(0.269 0.02 106.423);
+  --ring: oklch(0.647 0.162 285.75);
+  --chart-1: oklch(0.647 0.162 285.75);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0.025 106.423);
+  --sidebar-foreground: oklch(0.985 0.005 106.423);
+  --sidebar-primary: oklch(0.647 0.162 285.75);
+  --sidebar-primary-foreground: oklch(0.985 0.005 106.423);
+  --sidebar-accent: oklch(0.269 0.02 106.423);
+  --sidebar-accent-foreground: oklch(0.985 0.005 106.423);
+  --sidebar-border: oklch(0.269 0.02 106.423);
+  --sidebar-ring: oklch(0.647 0.162 285.75);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-cta: var(--cta);
+  --color-cta-foreground: var(--cta-foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Stripe-inspired smooth gradient background for hero with cooler, more masculine tones */
+.stripe-gradient-hero {
+  /* Darkened the gradient colors significantly for better white logo visibility */
+  /* Added darker peachy-coral radial gradient in top left corner */
+  background: radial-gradient(circle at 10% 10%, rgba(221, 149, 137, 0.35) 0%, transparent 20%),
+    /* Darker teal radial gradient in top right corner */
+    radial-gradient(circle at 90% 10%, rgba(20, 184, 166, 0.4) 0%, transparent 25%),
+    /* Darker bluish-teal on left side */
+    radial-gradient(circle at 10% 50%, rgba(94, 234, 212, 0.45) 0%, transparent 30%),
+    /* Darker gradient with more saturated colors for better contrast with white logo */
+    linear-gradient(
+      135deg,
+      #90c8c8 0% /* Darker bluish-teal */,
+      #88bcd8 10% /* Darker cyan-blue */,
+      #a8c0e0 20% /* Darker blue-lavender */,
+      #b0c0e8 30% /* Darker periwinkle */,
+      #a8b8e8 40% /* Darker purple-blue */,
+      #88a0e8 50% /* Darker medium blue */,
+      #6888d8 60% /* Darker blue */,
+      #7898e0 70% /* Darker light blue */,
+      #98b0e8 80% /* Darker very light blue */,
+      #c8d8e8 90% /* Darker blue-gray */,
+      #e8ecee 95% /* Darker light gray */,
+      #fcfcf8 100% /* Warm off-white */
+    );
+  background-size: 200% 200%;
+  animation: gradient-flow 15s ease infinite;
+  position: relative;
+}
+
+/* Extended fade and made it completely invisible by fading to warm off-white with many more gradient stops */
+.stripe-gradient-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 274px; /* Extended by 35% from 203px */
+  /* Updated all rgba values to fade to #FCFCF8 (252, 252, 248) instead of white */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(252, 252, 248, 0.05) 10%,
+    rgba(252, 252, 248, 0.1) 20%,
+    rgba(252, 252, 248, 0.2) 30%,
+    rgba(252, 252, 248, 0.35) 40%,
+    rgba(252, 252, 248, 0.5) 50%,
+    rgba(252, 252, 248, 0.65) 60%,
+    rgba(252, 252, 248, 0.8) 70%,
+    rgba(252, 252, 248, 0.9) 80%,
+    rgba(252, 252, 248, 0.95) 90%,
+    rgba(252, 252, 248, 1) 100%
+  );
+  pointer-events: none;
+}
+
+/* Enhanced CTA button gradient animation with shimmer effect */
+.cta-gradient-button {
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 25%, #8b5cf6 50%, #3b82f6 75%, #6366f1 100%);
+  background-size: 300% 300%;
+  /* Slowed down animation from 3s to 8s */
+  animation: shimmer 8s ease infinite;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-gradient-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  /* Slowed down shimmer slide from 2s to 6s */
+  animation: shimmer-slide 6s ease infinite;
+}
+
+.cta-gradient-button:hover {
+  /* Slowed down hover animation from 1.5s to 4s */
+  animation: shimmer 4s ease infinite;
+}
+
+/* Removed yellow backgrounds and circle gradients, using clean white/subtle backgrounds */
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Added bouncing arrow animation for CTA buttons */
+@keyframes bounce-right {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.bounce-arrow {
+  animation: bounce-right 2s ease-in-out infinite;
+}
+
+/* Reduced vertical float distance by half (from -20px to -10px) */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradient-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer-slide {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 100%;
+  }
+}
