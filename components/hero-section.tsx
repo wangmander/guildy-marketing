@@ -3,15 +3,16 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
-import { signIn } from "next-auth/react"
+
+const LOGIN_URL =
+  "https://app.guildy.ai/api/auth/signin?callbackUrl=/pipelines"
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden stripe-gradient-hero">
       <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-26 lg:px-8">
         <div className="grid grid-cols-1 gap-x-24 gap-y-16 lg:grid-cols-2 lg:items-center">
-          
-          {/* LEFT SIDE TEXT */}
+          {/* LEFT SIDE — TEXT */}
           <div className="text-left">
             <div className="mb-4">
               <Image
@@ -32,51 +33,42 @@ export function HeroSection() {
               <span className="text-black font-medium">Close the damn offer.</span>
             </p>
 
-            {/* MAIN CTA BUTTON */}
+            {/* CTA BUTTON */}
             <div className="mt-10 flex items-start gap-x-6">
               <div className="flex flex-col items-start gap-3">
-
-                <Button
-                  size="lg"
-                  className="relative z-10 cta-gradient-button rounded-full text-white text-lg px-8 py-3 h-auto font-medium shadow-2xl hover:shadow-3xl transition-all duration-200 hover:scale-105 flex items-center gap-3"
-                  onClick={() =>
-                    signIn("google", {
-                      callbackUrl: "https://app.guildy.ai/pipelines"
-                    })
-                  }
-                >
-                  Connect Interview Gmail
-                  <ArrowRight className="w-4 h-4 bounce-arrow" />
-                </Button>
+                <a href={LOGIN_URL}>
+                  <Button
+                    size="lg"
+                    className="relative z-10 cta-gradient-button rounded-full text-white text-lg px-8 py-3 h-auto font-medium shadow-2xl hover:shadow-3xl transition-all duration-200 hover:scale-105 flex items-center gap-3"
+                  >
+                    Connect Interview Gmail
+                    <ArrowRight className="w-4 h-4 bounce-arrow" />
+                  </Button>
+                </a>
 
                 <div className="relative z-10 text-sm text-gray-700 ml-2">
-                  Free to try
+                  <span>Free to try</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE IMAGE → Also clickable CTA */}
+          {/* RIGHT SIDE — IMAGE CTA */}
           <div className="relative">
-            <div
-              onClick={() =>
-                signIn("google", { callbackUrl: "https://app.guildy.ai/pipelines" })
-              }
-              className="relative mx-auto w-full max-w-lg lg:max-w-none float-animation cursor-pointer"
-            >
-              <Image
-                src="/images/job-pipelines-dashboard.png"
-                alt="Guildy job pipeline dashboard"
-                width={800}
-                height={600}
-                className="w-full rounded-2xl shadow-2xl ring-1 ring-black/10"
-                priority
-              />
-
-              <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 blur-2xl transform scale-105" />
-            </div>
+            <a href={LOGIN_URL}>
+              <div className="relative mx-auto w-full max-w-lg lg:max-w-none float-animation cursor-pointer">
+                <Image
+                  src="/images/job-pipelines-dashboard.png"
+                  alt="Guildy job pipeline dashboard showing tracked applications"
+                  width={800}
+                  height={600}
+                  className="w-full rounded-2xl shadow-2xl ring-1 ring-black/10"
+                  priority
+                />
+                <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 blur-2xl transform scale-105" />
+              </div>
+            </a>
           </div>
-
         </div>
       </div>
     </section>
