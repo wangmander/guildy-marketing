@@ -14,40 +14,38 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-[#0f0a1a] border-t border-gray-800">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+    <footer className="bg-[#412A45]">
+      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
           {/* Brand */}
           <div>
             <div className="mb-4">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo%20M%20%28night%29-NU9r9uIyOYuLHxb9Y3UilQgB9q20e2.png"
+                src="/images/logo-20m-20flat-20-28night-29.png"
                 alt="Guildy"
                 width={125}
                 height={29}
                 className="h-6.5 w-auto"
-                style={{ height: '26px' }}
+                style={{ height: "26px" }}
               />
             </div>
-            {/* </CHANGE> */}
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-300">
               Guildy - Your AI-powered job pipeline tracker. Land your next role with confidence.
             </p>
           </div>
 
-          {/* Company */}
-          <div>
+          <div className="pt-[30px] lg:pt-0">
             <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/about" className="text-sm text-gray-300 hover:text-white transition-colors">
                   About
                 </Link>
               </li>
               <li>
                 <button
                   onClick={handleCopyEmail}
-                  className="text-sm text-gray-400 hover:text-white transition-colors text-left"
+                  className="text-sm text-gray-300 hover:text-white transition-colors text-left"
                 >
                   {copied ? "Email copied!" : "Contact"}
                 </button>
@@ -60,27 +58,42 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-white mb-4">Legal</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/privacy" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/privacy" className="text-sm text-gray-300 hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/terms" className="text-sm text-gray-300 hover:text-white transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/security" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <Link href="/security" className="text-sm text-gray-300 hover:text-white transition-colors">
                   Security
                 </Link>
               </li>
             </ul>
           </div>
         </div>
+      </div>
 
-        <div className="mt-32 border-t border-gray-800 pt-10">
-          <p className="text-sm text-gray-400 text-center">© {new Date().getFullYear()} Guildy. All rights reserved.</p>
-        </div>
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-4">
+        <p className="text-sm text-gray-300">© {new Date().getFullYear()} Guildy. All rights reserved.</p>
+      </div>
+
+      <div className="w-full relative">
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#412A45] to-transparent z-10" />
+        <Image
+          src="/images/footer-illustration-purple.png"
+          alt="Person at control panel dashboard"
+          width={1920}
+          height={800}
+          className="w-full h-auto"
+          priority
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIRAAAQMDBAMAAAAAAAAAAAAAAQIDEQAEBQYSITFBUWH/xAAUAQEAAAAAAAAAAAAAAAAAAAAF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEQMhMf/aAAwDAQACEEMPAD0AvM1kshp58sXV4ww6ygbUtKCSlI9nhSlVjm0LR//"
+          loading="eager"
+        />
       </div>
     </footer>
   )

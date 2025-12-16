@@ -1,16 +1,19 @@
 "use client"
 
 import { useState } from "react"
+import { EarlyAccessModal } from "./early-access-modal"
 
 export function ValueSection() {
+  const [modalOpen, setModalOpen] = useState(false)
+
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden bg-white">
+    <section className="relative py-24 sm:py-32 overflow-hidden bg-[#FAFAF7]">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <h1 className="text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-6">
+          <h1 className="text-balance text-3xl font-bold tracking-tight text-[#3A2240] sm:text-4xl mb-6">
             Don't interview alone
           </h1>
-          <h2 className="text-lg text-gray-600 sm:text-xl">
+          <h2 className="text-lg text-[#705D74] sm:text-xl">
             We've got your back at every round. No spreadsheets, no guesswork. Guildy shows where you stand and
             optimizes getting you hired.
           </h2>
@@ -19,41 +22,42 @@ export function ValueSection() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="space-y-4 group">
-              <h3 className="text-xl font-semibold text-foreground">Track All Your Applications</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold text-[#3A2240]">Track All Your Applications</h3>
+              <p className="text-[#705D74]">
                 See all your job applications in one place with clear pipeline stages and next steps.
               </p>
-              <a href="https://app.guildy.ai/api/auth/signin">
-                <div className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-border transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer">
-                  <img
-                    src="/images/job-pipelines-dashboard.png"
-                    alt="Guildy job pipelines dashboard showing multiple job applications with their current status and next steps"
-                    className="w-full rounded-xl shadow-lg"
-                  />
-                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-105" />
-                </div>
-              </a>
+              <div
+                onClick={() => setModalOpen(true)}
+                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-border transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
+              >
+                <img
+                  src="/images/pipelines-three-cards.png"
+                  alt="Guildy Interview Pipelines showing CloudScale, TechCorp Inc, and FinPeak applications with their current stages"
+                  className="w-full h-full object-contain rounded-xl"
+                />
+              </div>
             </div>
 
             <div className="space-y-4 group">
-              <h3 className="text-xl font-semibold text-foreground">Never Miss Important Details</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold text-[#3A2240]">Never Miss Important Details</h3>
+              <p className="text-[#705D74]">
                 Get detailed views of each application with email tracking and job information.
               </p>
-              <a href="https://app.guildy.ai/api/auth/signin">
-                <div className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-border transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer">
-                  <img
-                    src="/images/job-details-view.png"
-                    alt="Guildy job details view showing interview scheduling email and application timeline"
-                    className="w-full rounded-xl shadow-lg"
-                  />
-                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-105" />
-                </div>
-              </a>
+              <div
+                onClick={() => setModalOpen(true)}
+                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-border transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
+              >
+                <img
+                  src="/images/never-miss-details.png"
+                  alt="TechCorp Inc job detail showing scheduled final interview with upcoming meeting and last email from Lisa Chen"
+                  className="w-full h-full object-contain rounded-xl"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <EarlyAccessModal open={modalOpen} onOpenChange={setModalOpen} />
     </section>
   )
 }

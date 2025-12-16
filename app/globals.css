@@ -127,67 +127,165 @@
   }
 }
 
-/* Stripe-inspired smooth gradient background for hero with cooler, more masculine tones */
+/* Stripe-inspired colorful organic curves background with pink, yellow, cyan */
 .stripe-gradient-hero {
-  /* Darkened the gradient colors significantly for better white logo visibility */
-  /* Added darker peachy-coral radial gradient in top left corner */
-  background: radial-gradient(circle at 10% 10%, rgba(221, 149, 137, 0.35) 0%, transparent 20%),
-    /* Darker teal radial gradient in top right corner */
-    radial-gradient(circle at 90% 10%, rgba(20, 184, 166, 0.4) 0%, transparent 25%),
-    /* Darker bluish-teal on left side */
-    radial-gradient(circle at 10% 50%, rgba(94, 234, 212, 0.45) 0%, transparent 30%),
-    /* Darker gradient with more saturated colors for better contrast with white logo */
-    linear-gradient(
-      135deg,
-      #90c8c8 0% /* Darker bluish-teal */,
-      #88bcd8 10% /* Darker cyan-blue */,
-      #a8c0e0 20% /* Darker blue-lavender */,
-      #b0c0e8 30% /* Darker periwinkle */,
-      #a8b8e8 40% /* Darker purple-blue */,
-      #88a0e8 50% /* Darker medium blue */,
-      #6888d8 60% /* Darker blue */,
-      #7898e0 70% /* Darker light blue */,
-      #98b0e8 80% /* Darker very light blue */,
-      #c8d8e8 90% /* Darker blue-gray */,
-      #e8ecee 95% /* Darker light gray */,
-      #fcfcf8 100% /* Warm off-white */
-    );
-  background-size: 200% 200%;
-  animation: gradient-flow 15s ease infinite;
+  /* Darker base color for more professional look */
+  background: linear-gradient(180deg, #1e293b 0%, #334155 50%, #f8fafc 100%);
   position: relative;
+  overflow: hidden;
 }
 
-/* Extended fade and made it completely invisible by fading to warm off-white with many more gradient stops */
+/* Organic blob shapes - more saturated, professional colors */
+.stripe-gradient-hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 60%;
+  height: 100%;
+  /* Deeper coral/red instead of pastel pink */
+  background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.7) 0%, rgba(220, 38, 38, 0.4) 30%, transparent 70%);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  animation: blob-morph-1 20s ease-in-out infinite;
+  filter: blur(60px);
+}
+
+.stripe-gradient-hero .blob-yellow {
+  position: absolute;
+  top: -10%;
+  left: 20%;
+  width: 50%;
+  height: 80%;
+  /* Richer amber/orange instead of light yellow */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(245, 158, 11, 0.7) 0%,
+    rgba(217, 119, 6, 0.4) 40%,
+    transparent 70%
+  );
+  border-radius: 60% 40% 30% 70% / 60% 40% 60% 40%;
+  animation: blob-morph-2 25s ease-in-out infinite;
+  filter: blur(50px);
+}
+
+.stripe-gradient-hero .blob-cyan {
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 60%;
+  height: 100%;
+  /* Deeper teal/blue instead of light cyan */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(6, 182, 212, 0.7) 0%,
+    rgba(14, 116, 144, 0.4) 40%,
+    transparent 70%
+  );
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: blob-morph-3 22s ease-in-out infinite;
+  filter: blur(45px);
+}
+
+.stripe-gradient-hero .blob-purple {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  height: 60%;
+  /* Deeper violet instead of light purple */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(124, 58, 237, 0.6) 0%,
+    rgba(91, 33, 182, 0.3) 40%,
+    transparent 70%
+  );
+  border-radius: 50% 50% 40% 60% / 40% 60% 50% 50%;
+  animation: blob-morph-4 18s ease-in-out infinite;
+  filter: blur(60px);
+}
+
+/* Only fade to white at very bottom, no edge vignette */
 .stripe-gradient-hero::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 274px; /* Extended by 35% from 203px */
-  /* Updated all rgba values to fade to #FCFCF8 (252, 252, 248) instead of white */
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(252, 252, 248, 0.05) 10%,
-    rgba(252, 252, 248, 0.1) 20%,
-    rgba(252, 252, 248, 0.2) 30%,
-    rgba(252, 252, 248, 0.35) 40%,
-    rgba(252, 252, 248, 0.5) 50%,
-    rgba(252, 252, 248, 0.65) 60%,
-    rgba(252, 252, 248, 0.8) 70%,
-    rgba(252, 252, 248, 0.9) 80%,
-    rgba(252, 252, 248, 0.95) 90%,
-    rgba(252, 252, 248, 1) 100%
-  );
+  height: 200px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(248, 250, 252, 0.7) 50%, rgba(248, 250, 252, 1) 100%);
   pointer-events: none;
+  z-index: 10;
+}
+
+/* Blob morphing animations */
+@keyframes blob-morph-1 {
+  0%,
+  100% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    border-radius: 50% 50% 40% 60% / 50% 40% 60% 50%;
+    transform: translate(5%, 5%) rotate(5deg);
+  }
+  50% {
+    border-radius: 60% 40% 50% 50% / 60% 50% 50% 40%;
+    transform: translate(-3%, 8%) rotate(-3deg);
+  }
+  75% {
+    border-radius: 45% 55% 60% 40% / 45% 60% 40% 55%;
+    transform: translate(3%, -3%) rotate(3deg);
+  }
+}
+
+@keyframes blob-morph-2 {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 40% 60% 40%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    border-radius: 40% 60% 50% 50% / 40% 60% 50% 50%;
+    transform: translate(-5%, 3%) rotate(-5deg);
+  }
+  66% {
+    border-radius: 50% 50% 60% 40% / 50% 50% 40% 60%;
+    transform: translate(5%, -5%) rotate(5deg);
+  }
+}
+
+@keyframes blob-morph-3 {
+  0%,
+  100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+    transform: translate(-3%, 5%) rotate(3deg);
+  }
+  66% {
+    border-radius: 70% 30% 40% 60% / 60% 40% 60% 40%;
+    transform: translate(5%, -3%) rotate(-5deg);
+  }
+}
+
+@keyframes blob-morph-4 {
+  0%,
+  100% {
+    border-radius: 50% 50% 40% 60% / 40% 60% 50% 50%;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    border-radius: 40% 60% 60% 40% / 60% 40% 40% 60%;
+    transform: translate(3%, 3%) scale(1.05);
+  }
 }
 
 /* Enhanced CTA button gradient animation with shimmer effect */
 .cta-gradient-button {
   background: linear-gradient(135deg, #6366f1 0%, #3b82f6 25%, #8b5cf6 50%, #3b82f6 75%, #6366f1 100%);
   background-size: 300% 300%;
-  /* Slowed down animation from 3s to 8s */
   animation: shimmer 8s ease infinite;
   border: none;
   position: relative;
@@ -202,18 +300,20 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  /* Slowed down shimmer slide from 2s to 6s */
   animation: shimmer-slide 6s ease infinite;
 }
 
 .cta-gradient-button:hover {
-  /* Slowed down hover animation from 1.5s to 4s */
   animation: shimmer 4s ease infinite;
 }
 
-/* Removed yellow backgrounds and circle gradients, using clean white/subtle backgrounds */
-.float-animation {
-  animation: float 6s ease-in-out infinite;
+/* Different float animations for the two cards */
+.float-animation-1 {
+  animation: float-1 6s ease-in-out infinite;
+}
+
+.float-animation-2 {
+  animation: float-2 8s ease-in-out infinite;
 }
 
 /* Added bouncing arrow animation for CTA buttons */
@@ -231,14 +331,24 @@
   animation: bounce-right 2s ease-in-out infinite;
 }
 
-/* Reduced vertical float distance by half (from -20px to -10px) */
-@keyframes float {
+/* Two different float keyframes with different timing */
+@keyframes float-1 {
   0%,
   100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes float-2 {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
   }
 }
 
