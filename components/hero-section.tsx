@@ -50,7 +50,7 @@ export function HeroSection() {
                     alt="Guildy Interview Pipelines dashboard"
                     width={600}
                     height={450}
-                    className="w-full rounded-2xl shadow-2xl ring-1 ring-black/10"
+                    className="w-full rounded-2xl shadow-2xl ring-1 ring-[#E8D5EB]"
                     priority
                   />
                 </div>
@@ -61,7 +61,7 @@ export function HeroSection() {
                     alt="Interview Questions - What They Might Ask and What You Should Ask"
                     width={600}
                     height={450}
-                    className="w-full rounded-2xl shadow-2xl ring-1 ring-black/10"
+                    className="w-full rounded-2xl shadow-2xl ring-1 ring-[#E8D5EB]"
                   />
                 </div>
               </div>

@@ -3,7 +3,7 @@ import { HowItWorksSection } from "@/components/how-it-works-section"
 import { ProofPointsSection } from "@/components/proof-points-section"
 import { ValueSection } from "@/components/value-section"
 import { InterviewPrepSection } from "@/components/interview-prep-section"
-import { ProductShowcaseSection } from "@/components/product-showcase-section"
+import { ComparisonSection } from "@/components/comparison-section"
 import { CTASection } from "@/components/cta-section"
 import { Footer } from "@/components/footer"
 
@@ -15,7 +15,7 @@ export default function HomePage() {
       <ProofPointsSection />
       <ValueSection />
       <InterviewPrepSection />
-      <ProductShowcaseSection />
+      <ComparisonSection />
       <CTASection />
       <Footer />
     </main>

@@ -22,7 +22,7 @@ export function ProductShowcaseSection() {
         <div className="mx-auto mt-16 max-w-3xl">
           <div
             onClick={() => setModalOpen(true)}
-            className="rounded-3xl bg-white p-8 sm:p-10 shadow-2xl ring-1 ring-gray-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+            className="rounded-3xl bg-white p-8 sm:p-10 shadow-2xl ring-1 ring-[#E8D5EB] transition-all duration-300 hover:scale-[1.02] cursor-pointer"
           >
             <Image
               src="/images/1.png"

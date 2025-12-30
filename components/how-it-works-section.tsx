@@ -45,7 +45,7 @@ export function HowItWorksSection() {
                   </dt>
                   <dd className="mt-1 text-base leading-7 text-[#705D74]">{step.description}</dd>
                 </div>
-                <div className="w-full relative aspect-square bg-white rounded-xl shadow-xl ring-1 ring-gray-900/10">
+                <div className="w-full relative aspect-square bg-white rounded-xl shadow-xl ring-1 ring-[#E8D5EB]">
                   <div
                     onClick={() => setModalOpen(true)}
                     className="relative h-full p-3 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 cursor-pointer"

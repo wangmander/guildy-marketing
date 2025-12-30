@@ -28,7 +28,7 @@ export function ValueSection() {
               </p>
               <div
                 onClick={() => setModalOpen(true)}
-                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-border transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
+                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
               >
                 <img
                   src="/images/pipelines-three-cards.png"
@@ -45,7 +45,7 @@ export function ValueSection() {
               </p>
               <div
                 onClick={() => setModalOpen(true)}
-                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-border transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
+                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
               >
                 <img
                   src="/images/never-miss-details.png"

@@ -22,7 +22,7 @@ export function InterviewPrepSection() {
         <div className="mx-auto max-w-5xl">
           <div
             onClick={() => setModalOpen(true)}
-            className="rounded-3xl bg-white p-4 sm:p-6 shadow-xl ring-1 ring-gray-200/50 transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+            className="rounded-3xl bg-white p-4 sm:p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-all duration-300 hover:scale-[1.01] cursor-pointer"
           >
             <Image
               src="/images/image.png"
