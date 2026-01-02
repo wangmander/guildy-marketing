@@ -66,6 +66,10 @@ interface EarlyAccessModalProps {
   onOpenChange: (open: boolean) => void
 }
 
+function normalizeEmail(email: string) {
+  return email.trim().toLowerCase()
+}
+
 export function EarlyAccessModal({ open, onOpenChange }: EarlyAccessModalProps) {
   const [email, setEmail] = useState("")
   const [role, setRole] = useState("")
@@ -73,14 +77,17 @@ export function EarlyAccessModal({ open, onOpenChange }: EarlyAccessModalProps) 
   const [fullName, setFullName] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!open) return
 
+    setError(null)
+    setIsSubmitted(false)
+
     const handleFocus = (e: FocusEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
-        // Small delay to let keyboard appear
         setTimeout(() => {
           target.scrollIntoView({ behavior: "smooth", block: "center" })
         }, 300)
@@ -93,37 +100,60 @@ export function EarlyAccessModal({ open, onOpenChange }: EarlyAccessModalProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
 
-    if (!email || !role || !referral) return
+    const interviewGmail = normalizeEmail(email)
+
+    if (!interviewGmail || !role || !referral) {
+      setError("Please complete all required fields.")
+      return
+    }
+
+    // matches your backend validation
+    if (!interviewGmail.endsWith("@gmail.com")) {
+      setError("Must be a @gmail.com address.")
+      return
+    }
 
     setIsSubmitting(true)
 
-    // Prepare data for Supabase (will be connected later)
-    const formData = {
-      interview_gmail: email,
-      role_field: role || null,
-      referral_source: referral || null,
-      full_name: fullName || null,
-      created_at: new Date().toISOString(),
+    try {
+      // ✅ THIS is the real backend call (your curl proved /api/early_access works)
+      const resp = await fetch("/api/early_access", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          interviewGmail: interviewGmail,
+          field: role, // backend expects "field"
+          heardFrom: referral, // backend expects "heardFrom"
+          fullName: fullName?.trim() || null,
+        }),
+      })
+
+      const data = await resp.json().catch(() => ({}))
+
+      if (!resp.ok) {
+        setError(data?.error || data?.details || "Submission failed.")
+        setIsSubmitting(false)
+        return
+      }
+
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+
+      // Reset and close after success
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setEmail("")
+        setRole("")
+        setReferral("")
+        setFullName("")
+        onOpenChange(false)
+      }, 1500)
+    } catch (err: any) {
+      setIsSubmitting(false)
+      setError("Network error. Please try again.")
     }
-
-    console.log("[v0] Form data to be sent to Supabase:", formData)
-
-    // Simulate submission delay
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-
-    // Reset and close after success
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setEmail("")
-      setRole("")
-      setReferral("")
-      setFullName("")
-      onOpenChange(false)
-    }, 2000)
   }
 
   return (
@@ -231,6 +261,12 @@ export function EarlyAccessModal({ open, onOpenChange }: EarlyAccessModalProps) 
                 />
               </div>
 
+              {error ? (
+                <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {error}
+                </div>
+              ) : null}
+
               <div className="space-y-3 pb-4">
                 <Button
                   type="submit"
@@ -255,3 +291,5 @@ export function EarlyAccessModal({ open, onOpenChange }: EarlyAccessModalProps) 
     </Dialog>
   )
 }
+
+export default EarlyAccessModal
