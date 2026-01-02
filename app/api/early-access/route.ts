@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
 
@@ -29,10 +28,6 @@ export async function POST(req: Request) {
     if (!supabaseUrl) return json(500, { ok: false, error: "Missing SUPABASE_URL" });
     if (!serviceRoleKey) return json(500, { ok: false, error: "Missing SUPABASE_SERVICE_ROLE_KEY" });
 
-    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-
     const body = (await req.json()) as Payload;
 
     const interviewGmail = typeof body.interviewGmail === "string" ? body.interviewGmail : "";
@@ -46,35 +41,46 @@ export async function POST(req: Request) {
 
     const interview_gmail = normalizeEmail(interviewGmail);
 
-    // matches your UI expectation: Gmail address
     if (!interview_gmail.endsWith("@gmail.com")) {
-      return json(400, { ok: false, error: "Must be a Gmail address." });
+      return json(400, { ok: false, error: "Must be a @gmail.com address." });
     }
 
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
     const userAgent = req.headers.get("user-agent") ?? null;
     const referrer = req.headers.get("referer") ?? null;
 
-    const { error } = await supabaseAdmin.from("early_access_requests").insert({
-      interview_gmail,
-      field,
-      heard_from: heardFrom,
-      full_name: fullName?.trim() || null,
-      status: "pending",
-      ip,
-      user_agent: userAgent,
-      referrer,
+    // Supabase REST endpoint for inserts
+    const url = `${supabaseUrl}/rest/v1/early_access_requests`;
+
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        apikey: serviceRoleKey,
+        authorization: `Bearer ${serviceRoleKey}`,
+        // Prefer: return minimal response body
+        prefer: "return=minimal",
+      },
+      body: JSON.stringify([
+        {
+          interview_gmail,
+          field,
+          heard_from: heardFrom,
+          full_name: fullName?.trim() || null,
+          status: "pending",
+          ip,
+          user_agent: userAgent,
+          referrer,
+        },
+      ]),
     });
 
-    if (error) {
-      const msg = (error as any)?.message ?? String(error);
-      const lower = msg.toLowerCase();
-      const isDuplicate = lower.includes("duplicate") || lower.includes("unique");
+    // If your table has unique(lower(interview_gmail)), duplicates often return 409 Conflict
+    if (resp.status === 409) return json(200, { ok: true, deduped: true });
 
-      // If they submit twice, treat it as success (your unique index catches it)
-      if (isDuplicate) return json(200, { ok: true, deduped: true });
-
-      return json(500, { ok: false, error: "Supabase insert failed", details: msg });
+    if (!resp.ok) {
+      const text = await resp.text().catch(() => "");
+      return json(500, { ok: false, error: "Supabase insert failed", details: text || resp.statusText });
     }
 
     return json(200, { ok: true });
