@@ -1,4 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
+
+export const runtime = "nodejs";
 
 type Payload = {
   interviewGmail: string;
@@ -7,28 +9,31 @@ type Payload = {
   fullName?: string | null;
 };
 
+function json(status: number, body: any) {
+  return new NextResponse(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json" },
+  });
+}
+
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // This lets you test in browser: /api/early_access should return 200 JSON
-  if (req.method === "GET") {
-    return res.status(200).json({ ok: true, route: "/api/early_access" });
-  }
+// ✅ lets you test the endpoint in a browser
+export async function GET() {
+  return json(200, { ok: true, route: "/api/early_access" });
+}
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, error: "Method not allowed" });
-  }
-
+export async function POST(req: Request) {
   try {
     const supabaseUrl = process.env.SUPABASE_URL;
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    if (!supabaseUrl) return res.status(500).json({ ok: false, error: "Missing SUPABASE_URL" });
-    if (!serviceRoleKey) return res.status(500).json({ ok: false, error: "Missing SUPABASE_SERVICE_ROLE_KEY" });
+    if (!supabaseUrl) return json(500, { ok: false, error: "Missing SUPABASE_URL" });
+    if (!serviceRoleKey) return json(500, { ok: false, error: "Missing SUPABASE_SERVICE_ROLE_KEY" });
 
-    const body = req.body as Payload;
+    const body = (await req.json()) as Payload;
 
     const interviewGmail = typeof body.interviewGmail === "string" ? body.interviewGmail : "";
     const field = typeof body.field === "string" ? body.field : "";
@@ -36,19 +41,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const fullName = typeof body.fullName === "string" ? body.fullName : null;
 
     if (!interviewGmail || !field || !heardFrom) {
-      return res.status(400).json({ ok: false, error: "Missing required fields." });
+      return json(400, { ok: false, error: "Missing required fields." });
     }
 
     const interview_gmail = normalizeEmail(interviewGmail);
     if (!interview_gmail.endsWith("@gmail.com")) {
-      return res.status(400).json({ ok: false, error: "Must be a @gmail.com address." });
+      return json(400, { ok: false, error: "Must be a @gmail.com address." });
     }
 
-    const ip =
-      (req.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() ?? null;
-    const userAgent = (req.headers["user-agent"] as string | undefined) ?? null;
-    const referrer = (req.headers["referer"] as string | undefined) ?? null;
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
+    const userAgent = req.headers.get("user-agent") ?? null;
+    const referrer = req.headers.get("referer") ?? null;
 
+    // NOTE: table name must be EXACTLY this in Supabase
     const url = `${supabaseUrl}/rest/v1/early_access_requests`;
 
     const resp = await fetch(url, {
@@ -73,15 +78,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ]),
     });
 
-    if (resp.status === 409) return res.status(200).json({ ok: true, deduped: true });
+    if (resp.status === 409) return json(200, { ok: true, deduped: true });
 
     if (!resp.ok) {
       const text = await resp.text().catch(() => "");
-      return res.status(500).json({ ok: false, error: "Supabase insert failed", details: text || resp.statusText });
+      return json(500, { ok: false, error: "Supabase insert failed", details: text || resp.statusText });
     }
 
-    return res.status(200).json({ ok: true });
+    return json(200, { ok: true });
   } catch (e: any) {
-    return res.status(500).json({ ok: false, error: "Server error", details: e?.message ?? String(e) });
+    return json(500, { ok: false, error: "Server error", details: e?.message ?? String(e) });
   }
 }
