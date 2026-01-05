@@ -31,7 +31,7 @@ export default function AboutPage() {
             </p>
 
             <p>
-              I've lived this personally. I tried spreadsheets, notes, reminders, and inbox hacks. Still dropped
+              We've all gone through this pain - managing spreadsheets, notes, reminders, and inbox hacks. Still dropped
               threads, prepped reactively, and wasted time switching context instead of sharpening performance.
             </p>
 
