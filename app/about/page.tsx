@@ -25,7 +25,7 @@ export default function AboutPage() {
 
           <div className="space-y-6 text-foreground leading-relaxed">
             <p>
-              Job searching has turned into a full-time operations problem. When you're running multiple interview
+              Jo searching has turned into a full-time operations problem. When you're running multiple interview
               pipelines, tracking communication threads, scheduling screens, and preparing for every stage, a simple
               inbox turns into chaos fast.
             </p>
