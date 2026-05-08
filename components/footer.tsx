@@ -30,7 +30,16 @@ export function Footer() {
               />
             </div>
             <p className="text-sm text-gray-300">
-              Guildy - Your AI-powered job pipeline tracker. Land your next role with confidence.
+              Guildy is a job pipeline tracker with stage-aware interview prep. Land your next role
+              with confidence.
+            </p>
+            <p className="mt-3 text-sm text-gray-300">
+              <a
+                href="mailto:support@guildy.ai"
+                className="hover:text-white transition-colors"
+              >
+                support@guildy.ai
+              </a>
             </p>
           </div>
 

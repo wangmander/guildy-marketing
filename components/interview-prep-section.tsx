@@ -1,12 +1,6 @@
-"use client"
-
-import { useState } from "react"
 import Image from "next/image"
-import { EarlyAccessModal } from "./early-access-modal"
 
 export function InterviewPrepSection() {
-  const [modalOpen, setModalOpen] = useState(false)
-
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden bg-[#F5F5F0]">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -20,13 +14,10 @@ export function InterviewPrepSection() {
         </div>
 
         <div className="mx-auto max-w-5xl">
-          <div
-            onClick={() => setModalOpen(true)}
-            className="rounded-3xl bg-white p-4 sm:p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-all duration-300 hover:scale-[1.01] cursor-pointer"
-          >
+          <div className="rounded-3xl bg-white p-4 sm:p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-all duration-300 hover:scale-[1.01]">
             <Image
               src="/images/image.png"
-              alt="Interview prep showing Shopify, Dropbox, and Robinhood with role-specific questions for both candidates and interviewers"
+              alt="Interview prep with role-specific questions"
               width={800}
               height={400}
               className="w-full"
@@ -34,7 +25,6 @@ export function InterviewPrepSection() {
           </div>
         </div>
       </div>
-      <EarlyAccessModal open={modalOpen} onOpenChange={setModalOpen} />
     </section>
   )
 }

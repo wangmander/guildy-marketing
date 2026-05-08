@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Guildy - Land that job",
   description:
-    "AI-powered job pipeline tracker that connects to your Gmail, tracks applications, and helps you prepare for interviews.",
+    "Job pipeline tracker with stage-aware interview prep. Track every pipeline. Prep every round. Close the offer.",
   generator: "v0.app",
 }
 

@@ -1,11 +1,4 @@
-"use client"
-
-import { useState } from "react"
-import { EarlyAccessModal } from "./early-access-modal"
-
 export function ValueSection() {
-  const [modalOpen, setModalOpen] = useState(false)
-
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden bg-[#FAFAF7]">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
@@ -14,8 +7,8 @@ export function ValueSection() {
             Don't interview alone
           </h1>
           <h2 className="text-lg text-[#705D74] sm:text-xl">
-            We've got your back at every round. No spreadsheets, no guesswork. Guildy shows where you stand and
-            optimizes getting you hired.
+            We've got your back at every round. No spreadsheets, no guesswork. Guildy shows where
+            you stand and helps you nail the next conversation.
           </h2>
         </div>
 
@@ -24,15 +17,13 @@ export function ValueSection() {
             <div className="space-y-4 group">
               <h3 className="text-xl font-semibold text-[#3A2240]">Track All Your Applications</h3>
               <p className="text-[#705D74]">
-                See all your job applications in one place with clear pipeline stages and next steps.
+                See all your job applications in one place with clear pipeline stages and next
+                steps.
               </p>
-              <div
-                onClick={() => setModalOpen(true)}
-                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
-              >
+              <div className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-transform duration-300 group-hover:scale-[1.02] aspect-[3/4] flex items-center justify-center">
                 <img
                   src="/images/pipelines-three-cards.png"
-                  alt="Guildy Interview Pipelines showing CloudScale, TechCorp Inc, and FinPeak applications with their current stages"
+                  alt="Guildy pipeline cards"
                   className="w-full h-full object-contain rounded-xl"
                 />
               </div>
@@ -41,15 +32,12 @@ export function ValueSection() {
             <div className="space-y-4 group">
               <h3 className="text-xl font-semibold text-[#3A2240]">Never Miss Important Details</h3>
               <p className="text-[#705D74]">
-                Get detailed views of each application with email tracking and job information.
+                Get detailed views of each application with status tracking and job information.
               </p>
-              <div
-                onClick={() => setModalOpen(true)}
-                className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer aspect-[3/4] flex items-center justify-center"
-              >
+              <div className="relative rounded-2xl bg-card p-6 shadow-xl ring-1 ring-[#E8D5EB] transition-transform duration-300 group-hover:scale-[1.02] aspect-[3/4] flex items-center justify-center">
                 <img
                   src="/images/never-miss-details.png"
-                  alt="TechCorp Inc job detail showing scheduled final interview with upcoming meeting and last email from Lisa Chen"
+                  alt="Job detail view"
                   className="w-full h-full object-contain rounded-xl"
                 />
               </div>
@@ -57,7 +45,6 @@ export function ValueSection() {
           </div>
         </div>
       </div>
-      <EarlyAccessModal open={modalOpen} onOpenChange={setModalOpen} />
     </section>
   )
 }

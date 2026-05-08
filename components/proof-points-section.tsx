@@ -1,16 +1,19 @@
 export function ProofPointsSection() {
   const proofPoints = [
     {
-      stat: "30%",
-      description: "Users complete 30% more interviews",
+      title: "Stage-aware prep",
+      description:
+        "Hiring Manager prep is different from Bar Raiser prep. Generic tips are failure.",
     },
     {
-      stat: "80%",
-      description: "Reduce tracking time by 80%",
+      title: "Grounded in real research",
+      description:
+        "Deep Prep performs live company research before generating positioning and risks.",
     },
     {
-      stat: "<30 mins",
-      description: "Build interview confidence in <30 mins",
+      title: "Built for the moment that matters",
+      description:
+        "Designed for active job seekers in the layoff cycle. Calm UI for high-stakes prep.",
     },
   ]
 
@@ -20,7 +23,9 @@ export function ProofPointsSection() {
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 sm:grid-cols-3">
           {proofPoints.map((point, index) => (
             <div key={index} className="text-center">
-              <div className="text-4xl sm:text-5xl font-bold text-[#3A2240] mb-3">{point.stat}</div>
+              <div className="text-2xl sm:text-3xl font-semibold text-[#3A2240] mb-3">
+                {point.title}
+              </div>
               <div className="text-base sm:text-lg text-[#705D74]">{point.description}</div>
             </div>
           ))}
