@@ -17,7 +17,6 @@ export function Footer() {
     <footer className="bg-[#412A45]">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
-          {/* Brand */}
           <div>
             <div className="mb-4">
               <Image
@@ -30,8 +29,7 @@ export function Footer() {
               />
             </div>
             <p className="text-sm text-gray-300">
-              Guildy is a job pipeline tracker with stage-aware interview prep. Land your next role
-              with confidence.
+              Stage-specific interview prep tied to your live job pipeline.
             </p>
             <p className="mt-3 text-sm text-gray-300">
               <a
@@ -44,25 +42,27 @@ export function Footer() {
           </div>
 
           <div className="pt-[30px] lg:pt-0">
-            <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Product</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/about" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  About
-                </Link>
+                <a
+                  href="https://app.guildy.ai"
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  app.guildy.ai
+                </a>
               </li>
               <li>
                 <button
                   onClick={handleCopyEmail}
                   className="text-sm text-gray-300 hover:text-white transition-colors text-left"
                 >
-                  {copied ? "Email copied!" : "Contact"}
+                  {copied ? "Email copied" : "Contact"}
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Legal */}
           <div>
             <h3 className="text-sm font-semibold text-white mb-4">Legal</h3>
             <ul className="space-y-3">

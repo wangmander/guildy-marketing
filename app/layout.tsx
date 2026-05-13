@@ -11,11 +11,48 @@ const playfair = Playfair_Display({
   display: "swap",
 })
 
+const siteUrl = "https://guildy.ai"
+const title = "Guildy: Applying is easy. Landing is hard."
+const description =
+  "Stage-specific interview prep tied to your live job pipeline. Different prep for Screen, Hiring Manager, and Full Loop. $19.99/month, cancel anytime."
+
 export const metadata: Metadata = {
-  title: "Guildy - Land that job",
-  description:
-    "Job pipeline tracker with stage-aware interview prep. Track every pipeline. Prep every round. Close the offer.",
-  generator: "v0.app",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  applicationName: "Guildy",
+  keywords: [
+    "interview prep",
+    "job pipeline",
+    "job tracker",
+    "hiring manager interview",
+    "full loop interview",
+    "stage-specific prep",
+  ],
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "Guildy",
+    title,
+    description,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Guildy: Applying is easy. Landing is hard.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/opengraph-image"],
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
 }
 
 export default function RootLayout({
