@@ -17,7 +17,7 @@ export function HeroSection() {
                 className="h-[30px] w-auto"
               />
             </div>
-            <h1 className="text-balance text-6xl font-semibold leading-[1.02] tracking-tight text-[#3A2240] sm:text-8xl lg:text-8xl xl:text-[110px]">
+            <h1 className="text-balance text-5xl font-semibold leading-[1.05] tracking-tight text-[#3A2240] sm:text-7xl lg:text-6xl xl:text-7xl">
               Applying is easy.
               <br />
               Landing is hard.
