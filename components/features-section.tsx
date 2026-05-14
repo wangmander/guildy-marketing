@@ -41,13 +41,24 @@ const blocks: Block[] = [
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="relative bg-[#F5F5F0]">
+    <section id="features" className="relative bg-white pt-24 sm:pt-32 pb-8 sm:pb-12">
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs font-medium uppercase tracking-widest text-[#A69F8F]">
+            What it does
+          </p>
+          <h2 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#3A2240] sm:text-5xl lg:text-[56px]">
+            Built for landing, not just tracking
+          </h2>
+        </div>
+      </div>
+
       {blocks.map((block, index) => {
         const imageFirst = index % 2 === 0
         return (
           <div
             key={block.heading}
-            className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8"
+            className="relative mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-8 first:pt-16 first:sm:pt-20"
           >
             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-16">
               <div
