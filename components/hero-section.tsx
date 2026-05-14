@@ -23,10 +23,8 @@ export function HeroSection() {
               Landing is hard.
             </h1>
             <p className="mt-6 text-pretty text-lg leading-relaxed text-[#705D74] sm:text-xl lg:text-lg xl:text-xl">
-              Guildy is stage-specific interview prep tied to your live job pipeline.{" "}
-              <span className="text-[#3A2240] font-medium">
-                Different prep for Screen, Hiring Manager, and Full Loop.
-              </span>
+              <span className="text-[#3A2240] font-medium">Track every application. Prep for every round.</span>{" "}
+              Research the company, role, and interviewer behind each conversation.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Button

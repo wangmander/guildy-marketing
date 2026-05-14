@@ -13,8 +13,7 @@ const playfair = Playfair_Display({
 
 const siteUrl = "https://guildy.ai"
 const title = "Guildy: Applying is easy. Landing is hard."
-const description =
-  "Stage-specific interview prep tied to your live job pipeline. Different prep for Screen, Hiring Manager, and Full Loop. Free to start."
+const description = "Track every application. Prep for every round."
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

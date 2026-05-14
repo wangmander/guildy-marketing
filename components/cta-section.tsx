@@ -7,7 +7,7 @@ export function CTASection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-3xl font-bold tracking-tight text-[#3A2240] sm:text-4xl">
-            Stop tracking. Start landing.
+            Stop guessing. Start landing.
           </h2>
           <p className="mt-4 text-lg text-[#705D74]">
             Free to start. No credit card.
