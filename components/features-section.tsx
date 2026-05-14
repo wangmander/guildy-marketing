@@ -48,7 +48,7 @@ export function FeaturesSection() {
             What it does
           </p>
           <h2 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight text-[#3A2240] sm:text-5xl lg:text-[56px]">
-            Built for landing, not just tracking
+            Manage the round, not the application.
           </h2>
         </div>
       </div>
