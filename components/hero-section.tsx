@@ -35,7 +35,7 @@ export function HeroSection() {
                 className="relative z-30 bg-[#2C1731] hover:bg-[#2C1731]/90 rounded-full text-white text-lg pl-10 pr-8 py-3 h-auto font-medium shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-3"
               >
                 <a href="https://app.guildy.ai">
-                  Get started
+                  Get started free
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </Button>
@@ -50,14 +50,19 @@ export function HeroSection() {
 
           <div className="relative">
             <div className="relative z-30 mx-auto w-full max-w-md lg:max-w-lg overflow-visible p-4">
-              <Image
-                src="/images/pipelines-screenshot.png"
-                alt="Guildy job pipeline dashboard"
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/landing/9-manyjobcards.png"
                 width={1200}
                 height={900}
-                priority
                 className="rounded-lg shadow-2xl ring-1 ring-[#E8D5EB] w-full h-auto"
-              />
+              >
+                {/* Future: <source src="/landing/hero-demo.mp4" type="video/mp4" /> */}
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>

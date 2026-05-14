@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 const siteUrl = "https://guildy.ai"
 const title = "Guildy: Applying is easy. Landing is hard."
 const description =
-  "Stage-specific interview prep tied to your live job pipeline. Different prep for Screen, Hiring Manager, and Full Loop. $19.99/month, cancel anytime."
+  "Stage-specific interview prep tied to your live job pipeline. Different prep for Screen, Hiring Manager, and Full Loop. Free to start."
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -37,10 +37,8 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Guildy: Applying is easy. Landing is hard.",
+        url: "/landing/9-manyjobcards.png",
+        alt: "Guildy job pipeline with many active applications",
       },
     ],
   },
@@ -48,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/opengraph-image"],
+    images: ["/landing/9-manyjobcards.png"],
   },
   alternates: {
     canonical: siteUrl,
