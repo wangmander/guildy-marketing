@@ -31,11 +31,58 @@ export async function POST(req: Request) {
         body: JSON.stringify(body),
       }
     )
-    const data = await upstream
+    const data = (await upstream
       .json()
-      .catch(() => ({ error: "Try again later" }))
+      .catch(() => ({ error: "Try again later" }))) as {
+      prep?: unknown
+      error?: string
+    }
+
+    // On a successful generation, persist the prep on the product side so
+    // signup can auto-load it. Best-effort: a failure here returns
+    // handoffId: null and the client falls back to ?source attribution.
+    if (upstream.ok && data.prep) {
+      const handoffId = await createHandoff(body, data.prep)
+      return NextResponse.json({ prep: data.prep, handoffId }, { status: 200 })
+    }
+
     return NextResponse.json(data, { status: upstream.status })
   } catch {
     return NextResponse.json({ error: "Try again later" }, { status: 503 })
+  }
+}
+
+// Persist { jd, resumeText, prepOutput } on the product side and return the
+// handoff uuid. Capped at 5s so prep delivery is never delayed by this
+// secondary call; any failure (timeout, 5xx, network, 404 before the
+// product endpoint ships) is logged and degrades to null.
+async function createHandoff(
+  body: unknown,
+  prepOutput: unknown
+): Promise<string | null> {
+  const { jd, resumeText } = (body ?? {}) as {
+    jd?: unknown
+    resumeText?: unknown
+  }
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 5000)
+  try {
+    const res = await fetch(`${APP_ORIGIN}/api/unauth-handoff/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jd, resumeText, prepOutput }),
+      signal: controller.signal,
+    })
+    if (!res.ok) {
+      console.error(`[quick-prep] handoff create failed: ${res.status}`)
+      return null
+    }
+    const data = (await res.json().catch(() => ({}))) as { id?: unknown }
+    return typeof data.id === "string" ? data.id : null
+  } catch (err) {
+    console.error("[quick-prep] handoff create error:", err)
+    return null
+  } finally {
+    clearTimeout(timeout)
   }
 }

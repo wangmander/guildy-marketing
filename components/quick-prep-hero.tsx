@@ -26,14 +26,13 @@ type PrepOutput = {
 const JD_MAX = 20000
 const RESUME_MAX = 50000
 
-// HANDOFF: the product app's /signup reads ?source for funnel
-// attribution. Carrying the generated prep across the guildy.ai ->
-// app.guildy.ai origin boundary needs a server-side token store
-// (localStorage is origin-scoped; a full PrepOutput + JD + resume does
-// not fit in URL params). That mechanism is a separate coordination
-// item with the product side; until it ships the CTA just routes to
-// signup and the user generates prep on their first job there.
-const SIGNUP_URL = "https://app.guildy.ai/signup?source=hero-quick-prep"
+// HANDOFF: the proxy persists the generated prep on the product side and
+// returns a handoff uuid. When present, the CTA routes to signup with
+// ?handoff={uuid} so the saved prep auto-loads after signup. If the
+// persistence step failed, handoffId is null and the CTA falls back to
+// ?source attribution and the user regenerates on their first job.
+const APP_ORIGIN = "https://app.guildy.ai"
+const SIGNUP_FALLBACK_URL = `${APP_ORIGIN}/signup?source=hero-quick-prep`
 
 const LOADING_STEPS = [
   "Reading the job description...",
@@ -49,6 +48,7 @@ export function QuickPrepHero() {
   const [resumeText, setResumeText] = useState("")
   const [status, setStatus] = useState<Status>("idle")
   const [prep, setPrep] = useState<PrepOutput | null>(null)
+  const [handoffId, setHandoffId] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [loadingStep, setLoadingStep] = useState(0)
   const resultRef = useRef<HTMLDivElement>(null)
@@ -86,6 +86,7 @@ export function QuickPrepHero() {
     setStatus("loading")
     setErrorMsg(null)
     setPrep(null)
+    setHandoffId(null)
     try {
       const res = await fetch("/api/quick-prep", {
         method: "POST",
@@ -94,6 +95,7 @@ export function QuickPrepHero() {
       })
       const data = (await res.json().catch(() => ({}))) as {
         prep?: PrepOutput
+        handoffId?: string | null
         error?: string
       }
       if (!res.ok || !data.prep) {
@@ -102,6 +104,7 @@ export function QuickPrepHero() {
         return
       }
       setPrep(data.prep)
+      setHandoffId(data.handoffId ?? null)
       setStatus("done")
     } catch {
       setErrorMsg("Try again later")
@@ -220,7 +223,13 @@ export function QuickPrepHero() {
                 asChild
                 className="mt-5 inline-flex h-auto items-center gap-2 rounded-full bg-[#2C1731] px-8 py-3 text-base font-medium text-white shadow-lg transition-all duration-200 hover:scale-105 hover:bg-[#2C1731]/90"
               >
-                <a href={SIGNUP_URL}>
+                <a
+                  href={
+                    handoffId
+                      ? `${APP_ORIGIN}/signup?handoff=${encodeURIComponent(handoffId)}`
+                      : SIGNUP_FALLBACK_URL
+                  }
+                >
                   Save this job and unlock Deep Prep
                   <ArrowRight className="h-4 w-4" />
                 </a>
