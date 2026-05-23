@@ -113,7 +113,7 @@ export function QuickPrepHero() {
   }
 
   return (
-    <section id="quick-prep" className="bg-white">
+    <section id="try-it-now" className="scroll-mt-24 bg-white">
       <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24 lg:px-8">
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-[#F3E9F5] px-4 py-1.5 text-sm font-medium text-[#7A4D82]">

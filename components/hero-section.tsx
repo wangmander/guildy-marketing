@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 
+import { TryItNowButton } from "@/components/try-it-now-button"
+
 export function HeroSection() {
   return (
     <section className="relative bg-[#F5F5F0]">
@@ -45,12 +47,7 @@ export function HeroSection() {
                 <ArrowRight className="w-4 h-4" />
               </a>
             </Button>
-            <a
-              href="#features"
-              className="relative z-30 text-base font-medium text-[#3A2240] hover:text-[#2C1731] underline underline-offset-4 decoration-[#B88ABF]"
-            >
-              See how it works
-            </a>
+            <TryItNowButton className="relative z-30 text-base font-medium text-[#3A2240] hover:text-[#2C1731] underline underline-offset-4 decoration-[#B88ABF]" />
           </div>
         </div>
       </div>
