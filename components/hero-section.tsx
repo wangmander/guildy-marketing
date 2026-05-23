@@ -53,12 +53,14 @@ export function HeroSection() {
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 poster="/landing/9-manyjobcards.png"
+                aria-label="Guildy product demo"
                 width={1200}
                 height={900}
                 className="rounded-lg shadow-2xl ring-1 ring-[#E8D5EB] w-full h-auto"
               >
-                {/* Future: <source src="/landing/hero-demo.mp4" type="video/mp4" /> */}
+                <source src="/videos/hero-demo.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
