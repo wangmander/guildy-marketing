@@ -13,12 +13,12 @@ export function HeroSection() {
         priority
         className="absolute left-6 top-4 z-30 h-[28px] w-auto"
       />
-      <div className="relative z-20 mx-auto max-w-4xl px-6 pt-12 pb-4 sm:py-6">
-        <div className="flex flex-col items-center gap-4 sm:gap-6">
-          <h1 className="max-w-3xl text-balance text-center text-4xl font-bold leading-tight tracking-tight text-[#3A2240] md:text-6xl">
+      <div className="relative z-20 mx-auto max-w-6xl px-6 py-12 sm:py-16">
+        <div className="flex flex-col items-center">
+          <h1 className="text-balance text-center text-4xl font-bold leading-tight tracking-tight text-[#3A2240] md:text-5xl xl:text-6xl lg:whitespace-nowrap">
             Applying is easy. Landing is hard.
           </h1>
-          <p className="max-w-2xl text-pretty text-center text-lg leading-relaxed text-[#705D74] sm:text-xl">
+          <p className="mt-6 max-w-2xl text-pretty text-center text-lg leading-relaxed text-[#705D74] sm:mt-8 sm:text-xl">
             Track every application. Prep for every round.
           </p>
           <video
@@ -29,12 +29,12 @@ export function HeroSection() {
             preload="metadata"
             poster="/landing/9-manyjobcards.png"
             aria-label="Guildy product demo"
-            className="relative z-30 aspect-video w-full rounded-sm border-0 bg-transparent object-cover shadow-2xl outline-none ring-0"
+            className="relative z-30 mt-12 aspect-video w-full rounded-sm border-0 bg-transparent object-cover shadow-2xl outline-none ring-0 sm:mt-16"
           >
             <source src="/videos/hero-demo.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:mt-12 sm:flex-row sm:gap-6">
             <Button
               asChild
               size="lg"
