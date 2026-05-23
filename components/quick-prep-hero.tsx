@@ -120,7 +120,7 @@ export function QuickPrepHero() {
             <Sparkles className="h-4 w-4" />
             Try it now
           </span>
-          <h2 className="mt-5 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-[#3A2240] sm:text-5xl">
+          <h2 className="mt-5 text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-[#3A2240] md:whitespace-nowrap">
             See your interview prep in 20 seconds
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-pretty text-lg leading-relaxed text-[#705D74]">

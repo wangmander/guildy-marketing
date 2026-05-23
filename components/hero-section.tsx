@@ -18,7 +18,7 @@ export function HeroSection() {
           <h1 className="text-balance text-center text-4xl font-bold leading-tight tracking-tight text-[#3A2240] md:text-5xl xl:text-6xl lg:whitespace-nowrap">
             Applying is easy. Landing is hard.
           </h1>
-          <p className="mt-6 max-w-2xl text-pretty text-center text-lg leading-relaxed text-[#705D74] sm:mt-8 sm:text-xl">
+          <p className="mt-3 max-w-2xl text-pretty text-center text-lg leading-relaxed text-[#705D74] sm:text-xl">
             Track every application. Prep for every round.
           </p>
           <video
