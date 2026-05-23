@@ -29,7 +29,7 @@ export function HeroSection() {
             preload="metadata"
             poster="/landing/9-manyjobcards.png"
             aria-label="Guildy product demo"
-            className="relative z-30 aspect-video w-full rounded-2xl border-0 object-cover shadow-2xl outline-none"
+            className="relative z-30 aspect-video w-full rounded-sm border-0 bg-transparent object-cover shadow-2xl outline-none ring-0"
           >
             <source src="/videos/hero-demo.mp4" type="video/mp4" />
             Your browser does not support the video tag.
