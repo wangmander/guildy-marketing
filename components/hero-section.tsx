@@ -5,9 +5,9 @@ import { ArrowRight } from "lucide-react"
 export function HeroSection() {
   return (
     <section className="relative bg-[#F5F5F0]">
-      <div className="relative z-20 mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-        <div className="grid grid-cols-1 gap-x-24 gap-y-16 lg:grid-cols-2 lg:items-center">
-          <div className="text-left">
+      <div className="relative z-20 mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+        <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-12 lg:items-center">
+          <div className="text-left lg:col-span-4">
             <div className="mb-4">
               <Image
                 src="/images/logo-plum.png"
@@ -23,8 +23,7 @@ export function HeroSection() {
               Landing is hard.
             </h1>
             <p className="mt-8 text-pretty text-xl leading-relaxed text-[#705D74] sm:text-2xl lg:text-xl xl:text-2xl">
-              <span className="text-[#3A2240] font-medium">Track every application. Prep for every round.</span>{" "}
-              Research the company, role, and interviewer behind each conversation.
+              Track every application. Prep for every round.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Button
@@ -46,8 +45,8 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="relative z-30 mx-auto w-full max-w-md lg:max-w-lg overflow-visible p-4">
+          <div className="relative lg:col-span-8">
+            <div className="relative z-30 mx-auto aspect-video w-full max-w-md overflow-hidden rounded-2xl shadow-2xl ring-1 ring-[#E8D5EB] lg:max-w-none">
               <video
                 autoPlay
                 loop
@@ -56,9 +55,7 @@ export function HeroSection() {
                 preload="metadata"
                 poster="/landing/9-manyjobcards.png"
                 aria-label="Guildy product demo"
-                width={1200}
-                height={900}
-                className="rounded-lg shadow-2xl ring-1 ring-[#E8D5EB] w-full h-auto"
+                className="absolute inset-0 h-full w-full object-cover"
               >
                 <source src="/videos/hero-demo.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
