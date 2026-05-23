@@ -1,24 +1,15 @@
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
   return (
     <section className="relative bg-[#F5F5F0]">
-      <div className="relative z-20 mx-auto max-w-6xl px-6 py-12 sm:py-20">
-        <div className="flex flex-col items-center gap-10 sm:gap-12">
-          <Image
-            src="/images/logo-plum.png"
-            alt="Guildy"
-            width={122}
-            height={27}
-            className="h-[30px] w-auto"
-            priority
-          />
-          <h1 className="max-w-5xl text-balance text-center text-5xl font-bold leading-tight tracking-tight text-[#3A2240] sm:text-6xl md:text-7xl xl:text-8xl">
+      <div className="relative z-20 mx-auto max-w-4xl px-6 py-6 sm:py-8">
+        <div className="flex flex-col items-center gap-4 sm:gap-6">
+          <h1 className="max-w-3xl text-balance text-center text-4xl font-bold leading-tight tracking-tight text-[#3A2240] md:text-6xl">
             Applying is easy. Landing is hard.
           </h1>
-          <p className="max-w-2xl text-pretty text-center text-xl leading-relaxed text-[#705D74] sm:text-2xl">
+          <p className="max-w-2xl text-pretty text-center text-lg leading-relaxed text-[#705D74] sm:text-xl">
             Track every application. Prep for every round.
           </p>
           <div className="relative z-30 aspect-video w-full overflow-hidden rounded-2xl shadow-2xl">
@@ -36,7 +27,7 @@ export function HeroSection() {
               Your browser does not support the video tag.
             </video>
           </div>
-          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
             <Button
               asChild
               size="lg"
