@@ -12,7 +12,7 @@ export function HeroSection() {
           <p className="max-w-2xl text-pretty text-center text-lg leading-relaxed text-[#705D74] sm:text-xl">
             Track every application. Prep for every round.
           </p>
-          <div className="relative z-30 aspect-video w-full overflow-hidden rounded-2xl shadow-2xl">
+          <div className="relative z-30 aspect-video w-full overflow-hidden rounded-2xl bg-[#F5F5F0] shadow-2xl transform-gpu">
             <video
               autoPlay
               loop
@@ -21,7 +21,7 @@ export function HeroSection() {
               preload="metadata"
               poster="/landing/9-manyjobcards.png"
               aria-label="Guildy product demo"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full border-0 object-cover outline-none"
             >
               <source src="/videos/hero-demo.mp4" type="video/mp4" />
               Your browser does not support the video tag.
