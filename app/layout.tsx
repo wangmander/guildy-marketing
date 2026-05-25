@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import { Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+
+import { PostHogProvider } from "@/components/posthog-provider"
 import "./globals.css"
 
 const playfair = Playfair_Display({
@@ -60,7 +62,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased ${playfair.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        <Suspense fallback={null}>
+          <PostHogProvider>{children}</PostHogProvider>
+        </Suspense>
         <Analytics />
       </body>
     </html>

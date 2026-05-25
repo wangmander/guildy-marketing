@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "next/navigation"
+import posthog from "posthog-js"
 import { ArrowRight, Loader2, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -53,6 +55,13 @@ export function QuickPrepHero() {
   const [loadingStep, setLoadingStep] = useState(0)
   const resultRef = useRef<HTMLDivElement>(null)
 
+  const searchParams = useSearchParams()
+  const utmSource = searchParams?.get("utm_source") || undefined
+  const startedRef = useRef(false)
+  const generatedFiredRef = useRef(false)
+  const generationStartRef = useRef<number | null>(null)
+  const mountTimeRef = useRef<number>(Date.now())
+
   // Cycle the loading copy roughly every 5s so a ~20s wait shows motion.
   useEffect(() => {
     if (status !== "loading") return
@@ -70,6 +79,32 @@ export function QuickPrepHero() {
     }
   }, [status])
 
+  const jdLen = jd.trim().length
+  const resumeLen = resumeText.trim().length
+  useEffect(() => {
+    if (startedRef.current) return
+    if (jdLen === 0 && resumeLen === 0) return
+    posthog.capture("unauth_quick_prep_started", {
+      has_jd: jdLen > 0,
+      has_resume: resumeLen > 0,
+      utm_source: utmSource,
+    })
+    startedRef.current = true
+  }, [jdLen, resumeLen, utmSource])
+
+  useEffect(() => {
+    if (generatedFiredRef.current) return
+    if (status !== "done" || !prep) return
+    posthog.capture("unauth_quick_prep_generated", {
+      utm_source: utmSource,
+      generation_time_ms:
+        generationStartRef.current !== null
+          ? Date.now() - generationStartRef.current
+          : undefined,
+    })
+    generatedFiredRef.current = true
+  }, [status, prep, utmSource])
+
   const jdTrimmed = jd.trim()
   const resumeTrimmed = resumeText.trim()
   const jdOver = jdTrimmed.length > JD_MAX
@@ -83,6 +118,11 @@ export function QuickPrepHero() {
 
   const onGenerate = async () => {
     if (!canSubmit) return
+    posthog.capture("unauth_quick_prep_generate_clicked", {
+      utm_source: utmSource,
+    })
+    generationStartRef.current = Date.now()
+    generatedFiredRef.current = false
     setStatus("loading")
     setErrorMsg(null)
     setPrep(null)
@@ -229,6 +269,15 @@ export function QuickPrepHero() {
                       ? `${APP_ORIGIN}/signup?handoff=${encodeURIComponent(handoffId)}`
                       : SIGNUP_FALLBACK_URL
                   }
+                  onClick={() => {
+                    posthog.capture("unauth_signup_clicked", {
+                      has_handoff_id: !!handoffId,
+                      utm_source: utmSource,
+                      time_on_page_seconds: Math.round(
+                        (Date.now() - mountTimeRef.current) / 1000,
+                      ),
+                    })
+                  }}
                 >
                   Save this job and unlock Deep Prep
                   <ArrowRight className="h-4 w-4" />
