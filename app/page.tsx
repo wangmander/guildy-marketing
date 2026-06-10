@@ -1,17 +1,23 @@
-import { HeroSection } from "@/components/hero-section"
-import { QuickPrepHero } from "@/components/quick-prep-hero"
-import { FeaturesSection } from "@/components/features-section"
-import { CTASection } from "@/components/cta-section"
-import { Footer } from "@/components/footer"
+import { SiteNav } from "@/components/site-nav"
+import { Hero } from "@/components/hero"
+import { TryIt } from "@/components/try-it"
+import { Narrative } from "@/components/narrative"
+import { HowTiers } from "@/components/how-tiers"
+import { CloseCta } from "@/components/close-cta"
+import { SiteFooter } from "@/components/site-footer"
+import { ScrollReveal } from "@/components/scroll-reveal"
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
-      <HeroSection />
-      <QuickPrepHero />
-      <FeaturesSection />
-      <CTASection />
-      <Footer />
-    </main>
+    <>
+      <SiteNav />
+      <Hero />
+      <TryIt />
+      <Narrative />
+      <HowTiers />
+      <CloseCta />
+      <SiteFooter />
+      <ScrollReveal />
+    </>
   )
 }

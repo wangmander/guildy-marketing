@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { Footer } from "@/components/footer"
+import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
   title: "Privacy Policy · Guildy",
@@ -263,7 +263,7 @@ export default function PrivacyPage() {
           </section>
         </article>
       </div>
-      <Footer />
+      <SiteFooter />
     </div>
   )
 }
