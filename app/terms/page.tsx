@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Terms of Service · Guildy",
+  description: "The terms that govern your use of Guildy.",
+  alternates: { canonical: "/terms" },
 }
 
 export default function TermsOfService() {

@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
   title: "Privacy Policy · Guildy",
+  description: "What data Guildy uses, and what it does not access.",
+  alternates: { canonical: "/privacy" },
 }
 
 export default function PrivacyPage() {

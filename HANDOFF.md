@@ -110,6 +110,63 @@ navigation so it no longer dies mid-nav.
 Note: posthog-js bot detection suppresses all captures in automated/headless
 browsers. Verify events in a real (headed) browser, not headless.
 
+## SEO and machine-readability (Phase A)
+
+Crawlability + machine-readability foundation. No content pages (Phase B is
+separate). No visual, copy-tone, or Quick Prep changes.
+
+### Canonical host
+
+www.guildy.ai is canonical. `metadataBase` in `app/layout.tsx` is
+`https://www.guildy.ai`, so the homepage `canonical` and `og:url` resolve to
+www (was the apex `https://guildy.ai`, a canonical pointing at a redirect).
+Legal pages self-canonicalize via relative `alternates.canonical`
+(`/privacy`, `/terms`). Sitemap, robots, JSON-LD, og:image, and llms.txt all
+use the www origin.
+
+REDIRECT STATE (action needed outside the repo): the apex -> www redirect is
+NOT in repo config (`next.config.mjs` has no redirects). It is a Vercel
+dashboard domain setting and currently returns 307 (temporary). Change it to
+permanent (308) in the Vercel project domain settings. Cannot be fixed in code.
+
+### Files
+
+- `app/layout.tsx`: V2 metadata kept (title `Guildy: Walk in ready`
+  unchanged); description tightened to lead with the free-prep wedge. Injects
+  Organization + SoftwareApplication JSON-LD (`<script type=application/ld+json>`
+  in `<body>`). SoftwareApplication has a two-Offer array: Quick Prep price 0,
+  Deep Prep price 19.99 USD monthly. No aggregateRating (no real reviews).
+  Organization `sameAs` lists only the brand profiles (x.com/tryguildy,
+  bsky tryguildy); no personal handle anywhere.
+- `app/opengraph-image.tsx`: dynamic 1200x630 share card via next/og (edge
+  runtime), plum/paper tokens, Bricolage fetched with a system fallback.
+  `app/twitter-image.tsx` re-exports it (declares `runtime` as a literal).
+  twitter:card is summary_large_image.
+- `app/robots.ts` -> /robots.txt: allows `*` plus an explicit allow block for
+  each AI/search crawler (Googlebot, Bingbot, Google-Extended, GPTBot,
+  OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot,
+  Perplexity-User, Applebot, Applebot-Extended, Amazonbot, CCBot). Disallows
+  only `/api/`. References the sitemap; host is www.
+- `app/sitemap.ts` -> /sitemap.xml: real indexable routes only (`/`, `/privacy`,
+  `/terms`), www URLs. No api/utility routes.
+- `public/llms.txt`: wedge-first product description + page map (low priority,
+  cheap insurance).
+
+### Older-page audit
+
+No stale V1 "Read-only Gmail access" copy exists in the repo. The only
+gmail/inbox reference is `app/privacy/page.tsx` ("We do not access your email
+inbox..."), which is correct V2 copy. The stale V1 snippet some engines show
+lives in Google's old index, not in code; it resolves via reindex. /privacy
+and /terms are kept indexable (not noindexed) and are in the sitemap. No
+retired/legacy routes exist in the repo (only `/`, `/privacy`, `/terms`,
+`/api/quick-prep`); V1 URL cleanup is left to Search Console after reindex.
+
+### Manual follow-ups (not in this repo)
+
+- Flip apex -> www redirect to 308 in Vercel.
+- Submit sitemap and request reindex in Google Search Console / Bing.
+
 ## Gates
 
 - `pnpm build` clean.

@@ -1,0 +1,19 @@
+# Guildy
+
+> Free AI interview prep built from the real job description, your resume, and the exact round you are interviewing for. Paste a job and your resume and get Quick Prep in about 20 seconds, no signup. Guildy is also the command center for the whole job hunt: track every application and every round in one pipeline, and go deeper with Deep Prep when a round matters.
+
+## Product
+
+- Quick Prep: free, no signup. Reads the role and the round, then returns what the interview tests, how to position yourself, and the questions to expect.
+- Deep Prep: paid ($19.99/mo). Round-by-round question sets, model answers in your voice, interviewer and company insight, and a reusable story bank.
+- Pipeline: track applications across Screen, Hiring Manager, and Full Loop rounds in one place.
+
+## Key pages
+
+- [Home](https://www.guildy.ai/): product overview and the free Quick Prep console.
+- [Privacy Policy](https://www.guildy.ai/privacy): what data Guildy uses and does not access.
+- [Terms of Service](https://www.guildy.ai/terms): terms of use.
+
+## App
+
+- The product app lives at https://app.guildy.ai (sign up and use Guildy there).
