@@ -7,9 +7,7 @@ import posthog from "posthog-js"
 import {
   GetStartedButton,
   HANDOFF_STORAGE_KEY,
-  REF_STORAGE_KEY,
 } from "@/components/get-started-button"
-import { APP_ORIGIN } from "@/lib/app-origin"
 
 // Minimal mirror of the product app's PrepOutput (lib/ai/prep-types.ts).
 // Only the fields rendered here. Quick tier returns category and answer_plan
@@ -98,19 +96,11 @@ export function TryIt() {
   const [activeStep, setActiveStep] = useState(0)
   const [waiting, setWaiting] = useState(false)
   const [cardsIn, setCardsIn] = useState(0)
-  const [refId, setRefId] = useState<string | null>(null)
-  const [sharing, setSharing] = useState(false)
-  const [shareUrl, setShareUrl] = useState<string | null>(null)
-  const [shareError, setShareError] = useState<string | null>(null)
-  const [copied, setCopied] = useState(false)
 
   const searchParams = useSearchParams()
   const utmSource = searchParams?.get("utm_source") || undefined
   const startedRef = useRef(false)
   const generatedFiredRef = useRef(false)
-  const referralFiredRef = useRef(false)
-  const refHydratedRef = useRef(false)
-  const copyTimerRef = useRef<number | null>(null)
   const generationStartRef = useRef<number | null>(null)
   const stepTimerRef = useRef<number | null>(null)
   const typeTimerRef = useRef<number | null>(null)
@@ -152,68 +142,6 @@ export function TryIt() {
     generatedFiredRef.current = true
   }, [stage, prep, utmSource])
 
-  // ?ref pre-fill: a viewer arriving from a shared link. Fetch the share's
-  // JD (CORS-enabled GET on the app), pre-fill the field, stash the ref for
-  // attribution, then bring the viewer to the pre-filled console.
-  useEffect(() => {
-    if (refHydratedRef.current) return
-    const ref = searchParams?.get("ref")?.trim()
-    if (!ref) return
-    refHydratedRef.current = true
-    setRefId(ref)
-    try {
-      window.sessionStorage.setItem(REF_STORAGE_KEY, ref)
-    } catch {
-      // sessionStorage unavailable: the &ref= leg degrades to no attribution
-    }
-
-    let cancelled = false
-    ;(async () => {
-      try {
-        const res = await fetch(
-          `${APP_ORIGIN}/api/share/${encodeURIComponent(ref)}`,
-        )
-        if (!res.ok) return
-        const data = (await res.json().catch(() => ({}))) as {
-          jd_text?: string
-        }
-        if (cancelled || !data.jd_text) return
-        setJd(data.jd_text)
-      } catch {
-        // Share fetch failed: leave the field empty, ref still carries through
-      }
-    })()
-
-    const reduce = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)",
-    ).matches
-    window.requestAnimationFrame(() => {
-      document.getElementById("console")?.scrollIntoView({
-        behavior: reduce ? "auto" : "smooth",
-        block: "center",
-      })
-    })
-
-    return () => {
-      cancelled = true
-    }
-  }, [searchParams])
-
-  // prep_referral_converted: a ?ref viewer generated their own prep. Fires
-  // client-side once, carrying the viewer's anonymous distinct_id. The app
-  // separately writes the durable referral row from the body ref (no double
-  // count, different sink). event:"generated" discriminates this from the
-  // signup leg, which fires the same event name with the real user id.
-  useEffect(() => {
-    if (referralFiredRef.current) return
-    if (stage !== "result" || !prep || !refId) return
-    posthog.capture("prep_referral_converted", {
-      event: "generated",
-      share_id: refId,
-    })
-    referralFiredRef.current = true
-  }, [stage, prep, refId])
-
   // Staggered card reveal once the result stage shows.
   useEffect(() => {
     if (stage !== "result" || !prep) return
@@ -232,7 +160,6 @@ export function TryIt() {
     return () => {
       if (stepTimerRef.current) window.clearTimeout(stepTimerRef.current)
       if (typeTimerRef.current) window.clearTimeout(typeTimerRef.current)
-      if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current)
     }
   }, [])
 
@@ -297,9 +224,6 @@ export function TryIt() {
     setErrorMsg(null)
     setPrep(null)
     setHandoffId(null)
-    setShareUrl(null)
-    setShareError(null)
-    setCopied(false)
     setStage("progress")
     runProgress()
 
@@ -307,13 +231,7 @@ export function TryIt() {
       const res = await fetch("/api/quick-prep", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // ref (when present) is forwarded verbatim by the proxy so the app's
-        // generate endpoint writes the durable "generated" referral row.
-        body: JSON.stringify({
-          jd: jdTrimmed,
-          resumeText: cvTrimmed,
-          ...(refId ? { ref: refId } : {}),
-        }),
+        body: JSON.stringify({ jd: jdTrimmed, resumeText: cvTrimmed }),
       })
       const data = (await res.json().catch(() => ({}))) as {
         prep?: PrepOutput
@@ -344,57 +262,6 @@ export function TryIt() {
       setWaiting(false)
       setErrorMsg("Try again later")
       setStage("input")
-    }
-  }
-
-  const onAgain = () => {
-    setStage("input")
-    setPrep(null)
-    setErrorMsg(null)
-    setShareUrl(null)
-    setShareError(null)
-    setCopied(false)
-  }
-
-  // Share the JD-only teaser. Posts through the same-origin proxy (the app's
-  // create endpoint has no CORS); the proxy regenerates a teaser server-side.
-  // Sends ONLY the JD, never the resume or the generated prep.
-  const onShare = async () => {
-    if (sharing) return
-    setSharing(true)
-    setShareError(null)
-    setCopied(false)
-    try {
-      const res = await fetch("/api/share/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jd: jdTrimmed }),
-      })
-      const data = (await res.json().catch(() => ({}))) as {
-        url?: string
-        error?: string
-      }
-      if (!res.ok || !data.url) {
-        setShareError("Could not create a share link. Try again.")
-        return
-      }
-      setShareUrl(data.url)
-    } catch {
-      setShareError("Could not create a share link. Try again.")
-    } finally {
-      setSharing(false)
-    }
-  }
-
-  const onCopy = async () => {
-    if (!shareUrl) return
-    try {
-      await navigator.clipboard.writeText(shareUrl)
-      setCopied(true)
-      if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current)
-      copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // clipboard unavailable: the URL and Open link are still on screen
     }
   }
 
@@ -585,73 +452,8 @@ export function TryIt() {
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
                   </GetStartedButton>
-                  <button
-                    className="btn btn--ghost btn--sm"
-                    type="button"
-                    onClick={onShare}
-                    disabled={sharing}
-                  >
-                    {sharing ? (
-                      <>
-                        <span className="btn__spin" aria-hidden="true" />
-                        Creating link...
-                      </>
-                    ) : (
-                      <>
-                        Share this prep
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.2"
-                        >
-                          <path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v13" />
-                        </svg>
-                      </>
-                    )}
-                  </button>
-                  <button
-                    className="btn btn--ghost btn--sm"
-                    id="again"
-                    onClick={onAgain}
-                  >
-                    Run another
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                    >
-                      <path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5" />
-                    </svg>
-                  </button>
                 </div>
               </div>
-              {shareUrl ? (
-                <div className="share-row">
-                  <span className="share-row__url">{shareUrl}</span>
-                  <button
-                    className="btn btn--ghost btn--sm"
-                    type="button"
-                    onClick={onCopy}
-                  >
-                    {copied ? "Copied" : "Copy link"}
-                  </button>
-                  <a
-                    className="share-row__open"
-                    href={shareUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Open
-                  </a>
-                </div>
-              ) : null}
-              {shareError ? (
-                <p className="console__error" role="alert">
-                  {shareError}
-                </p>
-              ) : null}
             </div>
           </div>
         </div>

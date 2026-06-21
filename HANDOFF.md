@@ -83,41 +83,6 @@ The handoff-UUID pattern is load-bearing: onboarding consumes it to
 auto-populate the user's first kanban job + prep_versions row. Do not break
 the request body, the response mapping, or the signup URL contract.
 
-## Viral loop wiring (shareable prep)
-
-Marketing half of the shareable-prep loop. Contracts in
-`docs/viral-loop-marketing-wiring.md` are authoritative. The app half (the
-`shared_preps` store, `POST /api/share/create`, `GET /api/share/[id]`, the
-public `/p/[id]` page, the `prep_referrals` table) is shipped on the app repo
-and is OUT OF SCOPE here. Four pieces, all consuming the app's endpoints:
-
-1. Share button on the unauth result (`try-it.tsx`). Ghost "Share this prep"
-   button in the result foot. Click posts `{ jd }` (JD only, never resume or
-   prep) through the same-origin proxy `app/api/share/create/route.ts`, which
-   forwards server-side to the app's `POST /api/share/create` (no CORS,
-   ~20s Haiku teaser regen, `maxDuration:60`). On `{ id, url }` it reveals an
-   inline share-row: the url, a "Copy link" button that flips to "Copied", and
-   an "Open" link.
-2. `?ref` pre-fill (`try-it.tsx`, hero untouched). On mount with `?ref`, GET
-   `${NEXT_PUBLIC_APP_ORIGIN}/api/share/<id>` (CORS-enabled), pre-fill the JD
-   field from `jd_text`, stash the ref, and smooth-scroll to `#console`.
-3. Generated event: see the PostHog table (`prep_referral_converted`).
-4. Ref into signup: `get-started-button.tsx` appends `&ref=<shareId>` to the
-   signup link when a ref is stashed, so the app's signup leg attributes it.
-
-Ref persistence: `sessionStorage["guildy_ref_id"]` (`REF_STORAGE_KEY` in
-`get-started-button.tsx`), tab-scoped, mirroring the handoff channel. The app
-reads ref from the `&ref=` URL param, not this storage. On a ref'd generation,
-`try-it.tsx` also adds `ref` to the `/api/quick-prep` POST body; the proxy
-forwards it verbatim so the app writes the durable `generated` referral row.
-That DB row and the client-side PostHog event are separate sinks, no double
-count.
-
-Origins: server proxies (`/api/quick-prep`, `/api/share/create`) use the
-server-only `APP_ORIGIN` env. Client-side calls (share GET, signup link) use
-`NEXT_PUBLIC_APP_ORIGIN` via `lib/app-origin.ts`. Both default to
-`https://app.guildy.ai`; both documented in `.env.example`.
-
 ## Hero film
 
 `public/videos/hero-demo.mp4` plays in `#film` as a v0: muted, autoplay, loop,
@@ -126,7 +91,7 @@ toggles mute (aria-label switches Unmute/Mute). Under prefers-reduced-motion
 the film renders paused on its first frame. Swap point for the final edited
 cut is the `<source>` in `components/hero.tsx` (add a `poster` then too).
 
-## PostHog events (6, all load-bearing)
+## PostHog events (5, all load-bearing)
 
 Config in `components/posthog-provider.tsx`: `capture_pageview:false`,
 `person_profiles:"identified_only"`, host `us.i.posthog.com`.
@@ -138,18 +103,9 @@ Config in `components/posthog-provider.tsx`: `capture_pageview:false`,
 | `unauth_quick_prep_generate_clicked` | Generate click | `try-it.tsx` |
 | `unauth_quick_prep_generated` | real prep result renders | `try-it.tsx` |
 | `unauth_signup_clicked` | any "Get started free" click | `get-started-button.tsx` |
-| `prep_referral_converted` | a `?ref` viewer's own prep renders | `try-it.tsx` |
 
 `unauth_signup_clicked` fires with `{ send_instantly: true }` before
 navigation so it no longer dies mid-nav.
-
-`prep_referral_converted` fires CLIENT-SIDE only for `?ref` viewers, with
-`{ event: "generated", share_id }`, carrying the viewer's anonymous
-distinct_id (never share_id as the distinct_id). The `event` property
-discriminates the two legs of the loop: the marketing side fires the
-`"generated"` leg; the app's signup leg fires the SAME event name with the
-real user id and must carry `event:"signup"` for the funnel to split cleanly
-(flag the app side if it does not).
 
 Note: posthog-js bot detection suppresses all captures in automated/headless
 browsers. Verify events in a real (headed) browser, not headless.
